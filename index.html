@@ -1,20 +1,59 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="pl">
 <head>
-<title>Lamelka Calender</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lamelka Calendar</title>
+
+  <style>
+    html, body { height: 100%; margin: 0; }
+    #ramka {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: 0;
+    }
+    #fullscreenBtn {
+      position: fixed;
+      right: 12px;
+      bottom: 12px;
+      z-index: 9999;
+      padding: 10px 14px;
+      border: 0;
+      border-radius: 10px;
+      cursor: pointer;
+      background: #111;
+      color: #fff;
+      opacity: 0.85;
+    }
+    #fullscreenBtn:hover { opacity: 1; }
+  </style>
 </head>
 <body>
-<iframe src="https://script.google.com/macros/s/AKfycbwEm9DBh6srTlhd9ZWcqlvZmVpJoT-4IitTceEiClasjdxNJ46UAhvFP_X3HhU1kKJzlw/exec"
-width="100%"
-height="100%"
-allowfullscreen="true"
-style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
-<script>
-window.onload = function() {
-document.querySelector('iframe').requestFullscreen().catch((err) => {
-console.error(`Error attempting to enable full-screen mode: ${err.message}`);
-});
-};
-</script>
+
+  <iframe
+    id="ramka"
+    src="https://script.google.com/macros/s/AKfycbwEm9DBh6srTlhd9ZWcqlvZmVpJoT-4IitTceEiClasjdxNJ46UAhvFP_X3HhU1kKJzlw/exec"
+    allow="fullscreen"
+    allowfullscreen
+  ></iframe>
+
+  <button id="fullscreenBtn">Pełny ekran</button>
+
+  <script>
+    const iframe = document.getElementById('ramka');
+    const btn = document.getElementById('fullscreenBtn');
+
+    btn.addEventListener('click', async () => {
+      try {
+        // W fullscreen zwykle lepiej wchodzi kontener (cała strona) niż sam iframe
+        await document.documentElement.requestFullscreen();
+      } catch (err) {
+        console.error('Fullscreen error:', err);
+        alert('Nie udało się włączyć pełnego ekranu. Przeglądarka może blokować fullscreen bez zgody.');
+      }
+    });
+  </script>
+
 </body>
 </html>
